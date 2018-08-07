@@ -60,12 +60,10 @@ func (s *transactionSampler) shouldAnalyze(span *model.WeightedSpan, hasPriority
 		if analyzeRate, ok := operations[span.Name]; ok {
 			// If the trace has been manually sampled, we keep all matching spans
 			highPriority := hasPriority && priority >= 2
-			if highPriority || sampler.SampleByRate(span.TraceID, analyzeRate) {
-				return true
-			}
+			return highPriority || sampler.SampleByRate(span.TraceID, analyzeRate)
 		}
 	}
-	return false
+	return span.TopLevel
 }
 
 type legacyTransactionSampler struct {

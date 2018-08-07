@@ -35,9 +35,9 @@ func TestTransactionSampler(t *testing.T) {
 		expectedSampling bool
 	}{
 		{"Top-level service and span name match", createTrace("myService", "myOperation", true, false, 0), true},
-		{"Top-level service name doesn't match", createTrace("otherService", "myOperation", true, false, 0), false},
-		{"Top-level span name doesn't match", createTrace("myService", "otherOperation", true, false, 0), false},
-		{"Top-level service and span name don't match", createTrace("otherService", "otherOperation", true, false, 0), false},
+		{"Top-level service name doesn't match", createTrace("otherService", "myOperation", true, false, 0), true},
+		{"Top-level span name doesn't match", createTrace("myService", "otherOperation", true, false, 0), true},
+		{"Top-level service and span name don't match", createTrace("otherService", "otherOperation", true, false, 0), true},
 		{"Non top-level service and span name match", createTrace("myService", "myOperation", false, false, 0), true},
 		{"Non top-level service name doesn't match", createTrace("otherService", "myOperation", false, false, 0), false},
 		{"Non top-level span name doesn't match", createTrace("myService", "otherOperation", false, false, 0), false},
